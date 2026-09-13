@@ -8,3 +8,12 @@ wheels/
 .env
 # Virtual environments
 .venv
+
+# Project specific directories
+chroma_db/
+drafts/
+output/
+#assets/logo_pertamina.png
+
+# Dependency lock files
+uv.lock
