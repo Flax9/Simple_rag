@@ -6,6 +6,7 @@ LLM_MODEL_NAME = "qwen3.5:9b"
 
 # Local Embedding & Vector Store Configurations
 EMBEDDING_MODEL_NAME = "Qwen/Qwen3-Embedding-0.6B"
+OLLAMA_EMBEDDING = "qwen3-embedding:4b"
 CHROMA_PERSIST_DIR = "./chroma_db"
 COLLECTION_NAME = "qwen_knowledge_base"
 
