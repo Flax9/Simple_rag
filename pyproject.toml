@@ -4,7 +4,8 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["langgraph",
+dependencies = [
+    "langgraph",
     "langchain",
     "langchain-core",
     "langchain-openai",
@@ -15,6 +16,6 @@ dependencies = ["langgraph",
     "langchain-chroma",
     "langchain-huggingface",
     "sentence-transformers",
-    "pypdf"
-
+    "pypdf",
+    "python-docx",
 ]
