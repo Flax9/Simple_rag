@@ -7,14 +7,27 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 import config
 from dotenv import load_dotenv
+from langchain_ollama import OllamaEmbeddings
+from langchain_openai import OpenAIEmbeddings
 load_dotenv()  # Load environment variables from .env file
 
 def get_embedding_function() -> HuggingFaceEmbeddings:
     """Loads the Qwen3 embedding model on local CPU."""
-    return HuggingFaceEmbeddings(
-        model_name=config.EMBEDDING_MODEL_NAME,
-        model_kwargs={"device": "cpu"},
-        encode_kwargs={"normalize_embeddings": True},
+    # Using huggingface
+    # return HuggingFaceEmbeddings(
+    #     model_name=config.EMBEDDING_MODEL_NAME,
+    #     model_kwargs={"device": "cpu"},
+    #     encode_kwargs={"normalize_embeddings": True},
+    # )
+
+    native_ollama_url = config.REMOTE_LLM_URL.replace("/v1", "").rstrip("/")
+    
+    return OllamaEmbeddings(
+        base_url=native_ollama_url,
+        model=config.OLLAMA_EMBEDDING,
+        client_kwargs={
+            "headers": {"ngrok-skip-browser-warning": "true"}
+        }
     )
 
 def ingest_pdf_documents() -> None:
