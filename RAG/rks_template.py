@@ -24,6 +24,9 @@ Berdasarkan potongan dokumen RKS referensi berikut, analisis dan ekstrak STRUKTU
 **Detail Pekerjaan:** {detail_pekerjaan}
 **Lokasi:** {lokasi}
 
+**Konteks Tambahan (Summary Dokumen Proyek / BOQ):**
+{context_summary}
+
 **Dokumen Referensi:**
 {chunks}
 
@@ -84,6 +87,9 @@ Isi konten untuk SATU BAB berikut berdasarkan DOKUMEN REFERENSI.
 {chunks}
 
 **Jenis Pekerjaan:** {jenis_pekerjaan}
+
+**Konteks Tambahan (Summary Dokumen Proyek / BOQ):**
+{context_summary}
 
 **INSTRUKSI:**
 1. Isi field "konten" di setiap sub_bab berdasarkan konteks dari dokumen referensi
@@ -153,7 +159,8 @@ def extract_rks_structure(
     llm,
     jenis_pekerjaan: str,
     detail_pekerjaan: str,
-    lokasi: str = ""
+    lokasi: str = "",
+    context_summary: str = ""
 ) -> dict:
     """
     Use LLM to analyze knowledge base chunks and extract a dynamic RKS structure.
@@ -173,7 +180,8 @@ def extract_rks_structure(
         jenis_pekerjaan=jenis_pekerjaan,
         detail_pekerjaan=detail_pekerjaan,
         lokasi=lokasi,
-        chunks=chunks
+        chunks=chunks,
+        context_summary=context_summary if context_summary else "(Tidak ada konteks tambahan)"
     )
     
     # Use max_tokens to limit structure-only output (skeleton, not full content)
@@ -191,7 +199,8 @@ def fill_rks_content(
     chunks: str,
     llm,
     jenis_pekerjaan: str,
-    on_chapter_progress: Optional[Callable[[int, int, str], None]] = None
+    on_chapter_progress: Optional[Callable[[int, int, str], None]] = None,
+    context_summary: str = ""
 ) -> dict:
     """
     Use LLM to fill content for each chapter (bab) ONE AT A TIME.
@@ -230,6 +239,7 @@ def fill_rks_content(
             chapter_json=json.dumps(chapter, ensure_ascii=False, indent=2),
             chunks=chunks,
             jenis_pekerjaan=jenis_pekerjaan,
+            context_summary=context_summary if context_summary else "(Tidak ada konteks tambahan)",
         )
         
         try:

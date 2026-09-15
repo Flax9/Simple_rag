@@ -1,7 +1,7 @@
 import os
 
 # Remote Inference Endpoint (replace with your active Kaggle ngrok tunnel URL)
-REMOTE_LLM_URL = "https://vibes-maturely-snowcap.ngrok-free.dev/v1"
+REMOTE_LLM_URL = "https://pamperer-handbook-dock.ngrok-free.dev/v1"
 LLM_MODEL_NAME = "qwen3.5:9b"
 
 # Local Embedding & Vector Store Configurations

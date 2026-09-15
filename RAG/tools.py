@@ -5,6 +5,10 @@ from RAG.rks_template import extract_rks_structure, fill_rks_content, revise_sec
 from RAG.docx_exporter import render_to_docx
 import config
 from langchain_openai import ChatOpenAI
+import sys
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 # Initialize retriever once for tool usage
 _retriever = get_vector_store().as_retriever(
@@ -63,7 +67,8 @@ def search_knowledge_base(query: str) -> str:
 def generate_rks_document(
     jenis_pekerjaan: str,
     detail_pekerjaan: str,
-    lokasi: str = ""
+    lokasi: str = "",
+    context_summary: str = ""
 ) -> str:
     """Generate draft RKS (Rencana Kerja dan Syarat-Syarat) secara utuh berdasarkan knowledge base.
     Struktur dan konten diekstrak secara dinamis dari dokumen RKS sejenis.
@@ -94,7 +99,8 @@ def generate_rks_document(
             llm=llm,
             jenis_pekerjaan=jenis_pekerjaan,
             detail_pekerjaan=detail_pekerjaan,
-            lokasi=lokasi
+            lokasi=lokasi,
+            context_summary=context_summary
         )
 
         num_bab = len(structure.get("bab", []))
@@ -110,6 +116,7 @@ def generate_rks_document(
             llm=llm,
             jenis_pekerjaan=jenis_pekerjaan,
             on_chapter_progress=on_progress,
+            context_summary=context_summary
         )
 
         print("  ✅ Seluruh konten berhasil digenerate!")

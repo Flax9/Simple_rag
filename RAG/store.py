@@ -13,7 +13,7 @@ load_dotenv()  # Load environment variables from .env file
 
 def get_embedding_function() -> HuggingFaceEmbeddings:
     """Loads the Qwen3 embedding model on local CPU."""
-    # Using huggingface
+    
     # return HuggingFaceEmbeddings(
     #     model_name=config.EMBEDDING_MODEL_NAME,
     #     model_kwargs={"device": "cpu"},
@@ -32,7 +32,7 @@ def get_embedding_function() -> HuggingFaceEmbeddings:
 
 def ingest_pdf_documents() -> None:
     """Scans rag/Data for PDFs, chunks their content, and persists vectors to ChromaDB."""
-    data_path = Path("./RAG/Data")
+    data_path = Path("./RAG/sample_data")
 
     print(sys.executable)
     print(torch.__version__)
